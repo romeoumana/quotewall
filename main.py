@@ -24,10 +24,19 @@ import json
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
+class Quotes(ndb.Model):
+    quote = ndb.StringProperty()
+# poster = ndb.StringProperty(required = false);
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/homepage.html')
         self.response.write(template.render());
+    def post(self):
+        text = self.request.get('quote');
+        quote = Quotes(quote = text);
+        quote.put();
+        self.redirect("/")
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
