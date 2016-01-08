@@ -4,6 +4,9 @@
     <title>Quote Wall</title>
   </head>
   <body>
+    {% for quote in results %}
+     <p> {{quote}} </p>
+    {% endfor %}
     <h1></h1>
     <form method="post">
       Submit a quote!<br>
