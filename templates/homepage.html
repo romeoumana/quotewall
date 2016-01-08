@@ -4,14 +4,15 @@
     <title>Quote Wall</title>
   </head>
   <body>
-    {% for quote in results %}
-     <p> {{quote}} </p>
+    {% for quote, person in zip %}
+     <p> {{quote}} by {{person}}</p>
     {% endfor %}
     <h1></h1>
     <form method="post">
       Submit a quote!<br>
       <textarea name="quote" rows="10" cols="30" placeholder="Give us a quote"></textarea>
       <br><br>
+      What's your name<input type="text" name="name">
       <input type="submit" value="Submit" required>
     </form>
   </body>

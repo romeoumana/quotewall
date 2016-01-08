@@ -25,26 +25,29 @@ import json
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 class Quotes(ndb.Model):
-    text = ndb.StringProperty()
-    # text = ndb.StringProperty(repeated = True)
-# poster = ndb.StringProperty(required = false);
+    text = ndb.StringProperty(repeated=True)
+    person = ndb.StringProperty(repeated=True)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         quotes = {}
-        list_of_quotes = Quotes.query();
-        all_quotes = [];
-        for quote in list_of_quotes:
-            all_quotes.append(quote.text);
-        quotes["results"] = all_quotes;
+        data = Quotes.get_by_id(5135269057527808) 
+        
+
+        combined_list = zip(data.text, data.person)
+        quotes["zip"] = combined_list
 
         template = jinja_environment.get_template('templates/homepage.html')
         self.response.write("this it totally the get page");
         self.response.write(template.render(quotes));
     def post(self):
-        text = self.request.get('quote');
-        quote = Quotes(text = text);
-        quote.put();
+        data = Quotes.get_by_id(5135269057527808)
+        data.text.append(self.request.get("quote"));
+        poster = self.request.get("name")
+        if poster == "":
+            poster = "Anonymous"
+        data.person.append(poster)
+        data.put()
         self.response.write("this it totally the post page");
         self.redirect("/")
 
