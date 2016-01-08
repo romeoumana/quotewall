@@ -26,7 +26,7 @@ jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.di
 
 class Quotes(ndb.Model):
     text = ndb.StringProperty()
-    text = ndb.StringProperty(repeated = True)
+    # text = ndb.StringProperty(repeated = True)
 # poster = ndb.StringProperty(required = false);
 
 class MainHandler(webapp2.RequestHandler):
@@ -46,7 +46,7 @@ class MainHandler(webapp2.RequestHandler):
         quote = Quotes(text = text);
         quote.put();
         self.response.write("this it totally the post page");
-        # self.redirect("/")
+        self.redirect("/")
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
